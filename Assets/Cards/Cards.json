@@ -1,0 +1,52 @@
+{
+    "cards": [
+        {
+            "name": "Card 1",
+            "strength": 10,
+            "image": "card1",
+            "combatRow": "melee",
+            "ability": "Ability 1",
+            "typeOfUnit": "silver"
+        },
+        {
+            "name": "Card 2",
+            "strength": 15,
+            "image": "card2",
+            "combatRow": "ranged",
+            "ability": "Ability 2",
+            "typeOfUnit": "gold"
+        },
+        {
+            "name": "Card 3",
+            "strength": 20,
+            "image": "card3",
+            "combatRow": "siege",
+            "ability": "Ability 3",
+            "typeOfUnit": "silver"
+        },
+        {
+            "name": "Card 4",
+            "strength": 25,
+            "image": "card4",
+            "combatRow": "melee",
+            "ability": "Ability 4",
+            "typeOfUnit": "silver"
+        },
+        {
+            "name": "Card 5",
+            "strength": 30,
+            "image": "card5",
+            "combatRow": "ranged",
+            "ability": "Ability 5",
+            "typeOfUnit": "gold"
+        },
+        {
+            "name": "Card 6",
+            "strength": 35,
+            "image": "card6",
+            "combatRow": "siege",
+            "ability": "Ability 6",
+            "typeOfUnit": "silver"
+        }
+    ]
+}

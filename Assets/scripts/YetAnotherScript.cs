@@ -2,33 +2,42 @@ using System.Collections.Generic;
 using CardGenerator;
 using UnityEngine;
 
+/// <summary>
+/// Represents a script that manages the game logic for placing cards on a board.
+/// </summary>
 public class YetAnotherScript : MonoBehaviour
 {
     private Board board;
     private List<Card> cards;
 
-    // Start is called before the first frame update
     private void Start()
     {
         board = new Board();
-        cards = LoadCards("../Cards/Cards.json");
+        cards = LoadCards("Assets/Cards/Cards.json");
+    }
+
+    [System.Serializable]
+    public class CardDataList
+    {
+        public List<CardData> cards;
     }
 
     private List<Card> LoadCards(string path)
     {
         string json = System.IO.File.ReadAllText(path);
-        List<CardData> data = JsonUtility.FromJson<List<CardData>>(json);
+        CardDataList data = JsonUtility.FromJson<CardDataList>(json);
         List<Card> cards = new();
 
-        foreach (CardData cardData in data)
+        foreach (CardData cardData in data.cards)
         {
             cards.Add(new Card(cardData));
+            Debug.Log(cardData.name);
+            Debug.Log(cardData.strength);
         }
 
         return cards;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         // Handle user input to select a card and place it on the board
