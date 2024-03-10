@@ -3,7 +3,7 @@
         {
             "name": "Card 1",
             "strength": 10,
-            "image": "card1",
+            "image": "Assets/Cards/Images/gwent_card (1).png",
             "combatRow": "melee",
             "ability": "Ability 1",
             "typeOfUnit": "silver"
