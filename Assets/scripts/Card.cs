@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace CardGenerator
 {
-
     [System.Serializable]
     public class CardData
     {
@@ -22,8 +21,9 @@ namespace CardGenerator
         public string CombatRow { get; private set; }
         public string Ability { get; private set; }
         public string TypeOfUnit { get; private set; }
+        public GameObject Model { get; private set; }
 
-        public Card(CardData data)
+        public Card(CardData data, GameObject model)
         {
             Name = data.name;
             Strength = data.strength;
@@ -31,6 +31,7 @@ namespace CardGenerator
             CombatRow = data.combatRow;
             Ability = data.ability;
             TypeOfUnit = data.typeOfUnit;
+            Model = model;
         }
     }
 }

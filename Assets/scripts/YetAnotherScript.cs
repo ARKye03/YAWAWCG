@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class YetAnotherScript : MonoBehaviour
 {
+    public GameObject cardModel;
     private Board board;
     private List<Card> cards;
 
@@ -31,7 +32,7 @@ public class YetAnotherScript : MonoBehaviour
 
         foreach (CardData cardData in data.cards)
         {
-            cards.Add(new Card(cardData));
+            cards.Add(new Card(cardData, cardModel));
             Debug.Log(cardData.image);
             Debug.Log(cardData.name);
             Debug.Log(cardData.strength);
@@ -75,9 +76,14 @@ public class YetAnotherScript : MonoBehaviour
                 Debug.LogError("Slot object is null");
                 return;
             }
-
             // Place the selected card in the appropriate row for player 0 at slot 0
             board.PlaceCard(selectedCard, 0, 0, section, slotObject);
+
+            // Instantiate the 3D model at the position of the slot
+            GameObject model = Instantiate(cardModel, slotObject.transform.position, Quaternion.identity);
+
+            // Attach the model to the slot
+            model.transform.SetParent(slotObject.transform);
         }
     }
 }
