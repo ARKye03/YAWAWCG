@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CardGenerator
+namespace Cards
 {
     [System.Serializable]
     public class CardData
@@ -30,11 +30,6 @@ namespace CardGenerator
             CombatRow = data.combatRow;
             Ability = data.ability;
             TypeOfUnit = data.typeOfUnit;
-        }
-
-        private void OnMouseDown()
-        {
-            Debug.Log("Card clicked: " + Name);
         }
     }
 }
