@@ -14,6 +14,7 @@ public class YetAnotherScript : MonoBehaviour
     {
         board = new Board();
         cards = LoadCards("Assets/Cards/Cards.json");
+        board.PlaceCard(cards[0], 0, 0, Section.Melee, board.GetMeleeSlot(0, 0));
     }
 
     [System.Serializable]
@@ -42,19 +43,41 @@ public class YetAnotherScript : MonoBehaviour
     private void Update()
     {
         // Handle user input to select a card and place it on the board
-        // This is just a placeholder, you'll need to implement this according to your game's requirements
         if (Input.GetMouseButtonDown(0))
         {
+            // Get the selected card
+            Card selectedCard = cards[0];
+
             // Get the slot where the card should be placed
-            GameObject slotObject = board.GetMeleeSlot(0, 0);
+            GameObject slotObject;
+            Section section;
+            switch (selectedCard.CombatRow)
+            {
+                case "melee":
+                    slotObject = board.GetMeleeSlot(0, 0);
+                    section = Section.Melee;
+                    break;
+                case "ranged":
+                    slotObject = board.GetRangedSlot(0, 0);
+                    section = Section.Ranged;
+                    break;
+                case "siege":
+                    slotObject = board.GetSiegeSlot(0, 0);
+                    section = Section.Siege;
+                    break;
+                default:
+                    Debug.LogError("Invalid card type");
+                    return;
+            }
+
             if (slotObject == null)
             {
                 Debug.LogError("Slot object is null");
                 return;
             }
 
-            // Place the first card in the melee row for player 0 at slot 0
-            board.PlaceCard(cards[0], 0, 0, Section.Melee, slotObject);
+            // Place the selected card in the appropriate row for player 0 at slot 0
+            board.PlaceCard(selectedCard, 0, 0, section, slotObject);
         }
     }
 }
