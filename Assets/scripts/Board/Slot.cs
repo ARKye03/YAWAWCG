@@ -8,7 +8,8 @@ public class Slot : MonoBehaviour
     public void SetCard(Card newCard)
     {
         card = newCard;
-        // Position the card at the slot
-        card.transform.position = transform.position;
+        // Instantiate the 3D model and position it at the slot
+        GameObject modelInstance = Instantiate(card.model);
+        modelInstance.transform.position = transform.position;
     }
 }
