@@ -31,6 +31,7 @@ public class YetAnotherScript : MonoBehaviour
         foreach (CardData cardData in data.cards)
         {
             cards.Add(new Card(cardData));
+            Debug.Log(cardData.image);
             Debug.Log(cardData.name);
             Debug.Log(cardData.strength);
         }
@@ -44,8 +45,16 @@ public class YetAnotherScript : MonoBehaviour
         // This is just a placeholder, you'll need to implement this according to your game's requirements
         if (Input.GetMouseButtonDown(0))
         {
+            // Get the slot where the card should be placed
+            GameObject slotObject = board.GetMeleeSlot(0, 0);
+            if (slotObject == null)
+            {
+                Debug.LogError("Slot object is null");
+                return;
+            }
+
             // Place the first card in the melee row for player 0 at slot 0
-            board.PlaceCard(cards[0], 0, 0, Section.Melee);
+            board.PlaceCard(cards[0], 0, 0, Section.Melee, slotObject);
         }
     }
 }

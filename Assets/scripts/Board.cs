@@ -14,58 +14,71 @@ public enum Section
 
 public class Board
 {
-    private readonly Card[,] meleeSlots;
-    private readonly Card[,] rangedSlots;
-    private readonly Card[,] siegeSlots;
-    private readonly Card[] buffSpots;
-    private readonly Card[] leaderSpots;
-    private readonly Card[] cemeteries;
-    private readonly Card[] deckSpots;
+    private readonly GameObject[,] meleeSlots;
+    private readonly GameObject[,] rangedSlots;
+    private readonly GameObject[,] siegeSlots;
+    private readonly GameObject[] buffSpots;
+    private readonly GameObject[] leaderSpots;
+    private readonly GameObject[] cemeteries;
+    private readonly GameObject[] deckSpots;
 
     public Board()
     {
-        meleeSlots = new Card[2, 5];
-        rangedSlots = new Card[2, 5];
-        siegeSlots = new Card[2, 5];
-        buffSpots = new Card[2];
-        leaderSpots = new Card[2];
-        cemeteries = new Card[2];
-        deckSpots = new Card[2];
+        meleeSlots = new GameObject[2, 5];
+        rangedSlots = new GameObject[2, 5];
+        siegeSlots = new GameObject[2, 5];
+        buffSpots = new GameObject[2];
+        leaderSpots = new GameObject[2];
+        cemeteries = new GameObject[2];
+        deckSpots = new GameObject[2];
     }
 
-    public void PlaceCard(Card card, int player, int slot, Section section)
+    public void PlaceCard(Card card, int player, int slot, Section section, GameObject slotObject)
     {
+        Slot slotComponent = slotObject.GetComponent<Slot>();
+        if (slotComponent == null)
+        {
+            Debug.LogError("Slot object does not have a Slot component");
+            return;
+        }
+
         switch (section)
         {
             case Section.Melee:
-                PlaceInSlots(meleeSlots, card, player, slot);
+                PlaceInSlots(meleeSlots, card, player, slot, slotComponent);
                 break;
             case Section.Ranged:
-                PlaceInSlots(rangedSlots, card, player, slot);
+                PlaceInSlots(rangedSlots, card, player, slot, slotComponent);
                 break;
             case Section.Siege:
-                PlaceInSlots(siegeSlots, card, player, slot);
+                PlaceInSlots(siegeSlots, card, player, slot, slotComponent);
                 break;
             case Section.Buff:
-                PlaceInSpot(buffSpots, card, player);
+                PlaceInSpot(buffSpots, card, player, slotComponent);
                 break;
             case Section.Leader:
-                PlaceInSpot(leaderSpots, card, player);
+                PlaceInSpot(leaderSpots, card, player, slotComponent);
                 break;
             case Section.Cemetery:
-                PlaceInSpot(cemeteries, card, player);
+                PlaceInSpot(cemeteries, card, player, slotComponent);
                 break;
             case Section.Deck:
-                PlaceInSpot(deckSpots, card, player);
+                PlaceInSpot(deckSpots, card, player, slotComponent);
                 break;
         }
     }
 
-    private void PlaceInSlots(Card[,] slots, Card card, int player, int slot)
+    private void PlaceInSlots(GameObject[,] slots, Card card, int player, int slot, Slot slotComponent)
     {
         if (slots[player, slot] == null)
         {
-            slots[player, slot] = card;
+            // Create a new GameObject instance and assign it to the slot
+            GameObject newSlot = new GameObject();
+            newSlot.name = "Slot " + slot;
+            slots[player, slot] = newSlot;
+
+            // Add the card to the GameObject slot
+            slotComponent.PlaceCard(card);
         }
         else
         {
@@ -73,15 +86,31 @@ public class Board
         }
     }
 
-    private void PlaceInSpot(Card[] spots, Card card, int player)
+    private void PlaceInSpot(GameObject[] spots, Card card, int player, Slot slotComponent)
     {
         if (spots[player] == null)
         {
-            spots[player] = card;
+            // Create a new GameObject instance and assign it to the spot
+            GameObject newSpot = new GameObject();
+            newSpot.name = "Spot " + player;
+            spots[player] = newSpot;
+
+            // Add the card to the GameObject spot
+            slotComponent.PlaceCard(card);
         }
         else
         {
             Debug.Log("Spot is already occupied");
         }
+    }
+    public GameObject GetMeleeSlot(int player, int slot)
+    {
+        if (player < 0 || player >= 2 || slot < 0 || slot >= 5)
+        {
+            Debug.LogError("Invalid player or slot index");
+            return null;
+        }
+
+        return meleeSlots[player, slot];
     }
 }
