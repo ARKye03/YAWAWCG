@@ -50,15 +50,6 @@ public class Board
 
     public void PlaceCard(Card card, int player, int slot, Section section, GameObject slotObject)
     {
-        // Check if the Model property of the Card class is null
-        if (card.Model == null)
-        {
-            Debug.LogError("Card model is null");
-            return;
-        }
-        GameObject model = Object.Instantiate(card.Model, slotObject.transform.position, Quaternion.identity);
-        model.transform.SetParent(slotObject.transform);
-
         if (!slotObject.TryGetComponent<Slot>(out var slotComponent))
         {
             Debug.LogError("Slot object does not have a Slot component");

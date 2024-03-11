@@ -13,7 +13,7 @@ namespace CardGenerator
         public string typeOfUnit;
     }
 
-    public class Card
+    public class Card : MonoBehaviour
     {
         public string Name { get; private set; }
         public int Strength { get; private set; }
@@ -21,9 +21,8 @@ namespace CardGenerator
         public string CombatRow { get; private set; }
         public string Ability { get; private set; }
         public string TypeOfUnit { get; private set; }
-        public GameObject Model { get; private set; }
 
-        public Card(CardData data, GameObject model)
+        public Card(CardData data)
         {
             Name = data.name;
             Strength = data.strength;
@@ -31,7 +30,11 @@ namespace CardGenerator
             CombatRow = data.combatRow;
             Ability = data.ability;
             TypeOfUnit = data.typeOfUnit;
-            Model = model;
+        }
+
+        private void OnMouseDown()
+        {
+            Debug.Log("Card clicked: " + Name);
         }
     }
 }
